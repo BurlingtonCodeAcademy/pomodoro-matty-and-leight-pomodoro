@@ -13,3 +13,11 @@ http://bootcamp.burlingtoncodeacademy.com/projects/pomodoro
 3. `npm test`  
 
 Acceptance tests are stored in `./cypress/integration` -- please add your own for later stories.
+
+## References:
+
+Cypress Clocks: 
+
+* https://docs.cypress.io/guides/guides/stubs-spies-and-clocks.html#Clock
+* https://docs.cypress.io/api/commands/clock.html
+

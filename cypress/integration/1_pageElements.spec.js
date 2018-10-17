@@ -11,6 +11,12 @@ describe('The page', function () {
   it('has a clock', function () {
     cy.get('#clock')
       .should('be.visible');
+
+    cy.get('#clock #minutes')
+      .should('be.visible');
+
+    cy.get('#clock #seconds')
+      .should('be.visible');
   });
 
   it('has buttons', function () {
