@@ -1,4 +1,8 @@
 describe('Countdown', () => {
+  beforeEach(() => {
+    cy.visit('/');
+  });
+  
   describe('starts', () => {
     it('starts with 25 minutes on the clock', () => {
       cy.get('#clock #minutes')
@@ -47,7 +51,7 @@ describe('Countdown', () => {
 
     });
 
-    it('catches up after a few seconds of lag', ()=>{
+    it('catches up after a few seconds of lag', () => {
       cy.tick(5000);
       cy.get('#clock #minutes')
         .contains('24')
