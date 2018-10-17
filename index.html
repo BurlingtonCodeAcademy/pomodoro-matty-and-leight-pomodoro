@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
 
     <style>
-    #tomato {
-        font-size: 180px;
-    }
+        #tomato {
+            font-size: 180px;
+        }
     </style>
 </head>
 
@@ -16,23 +17,15 @@
     </div>
 
     <div id="clock">
-        
+        <span id="minutes">25</span>:<span id="seconds">00</span>
     </div>
 
     <div id="buttons">
-        <button id='start' onclick='start()'>Start</button> 
-        
-        [Pause] [Reset]
+        <button id='start' onclick='start()'>Start</button>
+        <button id='pause' disabled="true" onclick='pause()'>Pause</button>
+        <button id='reset' onclick='reset()'>Reset</button>
     </div>
-
+    <script src="main.js"></script>
 </body>
+
 </html>
-
-
-
-
-
-
-
-
-
