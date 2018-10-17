@@ -13,6 +13,13 @@ describe('Countdown', () => {
       cy.get('#clock #seconds')
         .contains('00')
     });
+
+    specify('with Start enabled and Pause disabled', ()=>{
+      cy.get('#start')
+        .should('be.enabled')
+      cy.get('#pause')
+        .should('be.disabled')
+    });
   });
 
   describe('when the user clicks Start', () => {
@@ -65,8 +72,14 @@ describe('Countdown', () => {
         .contains('23')
       cy.get('#clock #seconds')
         .contains('59')
-
     })
+
+    specify('enables Pause and disables Start', ()=>{
+      cy.get('#start')
+        .should('be.disabled')
+      cy.get('#pause')
+        .should('be.enabled')
+    });
   })
 
 });
