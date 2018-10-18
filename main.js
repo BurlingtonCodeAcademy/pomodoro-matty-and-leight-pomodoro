@@ -1,12 +1,15 @@
-let seconds = 25 * 60;
+let initialSeconds = 25 * 60;
+let seconds = initialSeconds;
 let timeoutId;
 
-const timer = () => {
-  seconds = seconds - 1;
-  renderClock(seconds);
-  if (seconds < 1) {
-    seconds = 1;
-  }
+const timer = () =>
+  seconds ? renderClock(seconds - 1) : clearInterval(timeoutId);
+
+const renderClock = seconds => {
+  const { minutes, remainingSeconds } = formatSeconds(seconds);
+  document.querySelector("#seconds").textContent = remainingSeconds;
+  document.querySelector("#minutes").textContent = minutes;
+  document.title = `${minutes}:${remainingSeconds}`;
 };
 
 const formatSeconds = seconds => {
@@ -15,18 +18,6 @@ const formatSeconds = seconds => {
     .padStart(2, "0");
   let remainingSeconds = (seconds % 60).toString().padStart(2, "0");
   return { minutes, remainingSeconds };
-};
-
-const start = () => {
-  timeoutId = setInterval(timer, 1000);
-  setButtons("running");
-};
-
-const reset = () => {
-  seconds = 25 * 60;
-  renderClock(seconds);
-  clearInterval(timeoutId);
-  setButtons("reset");
 };
 
 const setButtons = state => {
@@ -45,10 +36,19 @@ const setButtons = state => {
   }
 };
 
-const renderClock = seconds => {
-  timeObject = formatSeconds(seconds);
-  remainingSeconds = timeObject.remainingSeconds;
-  minutes = timeObject.minutes;
-  document.querySelector("#seconds").textContent = remainingSeconds;
-  document.querySelector("#minutes").textContent = minutes;
+const start = () => {
+  timeoutId = setInterval(timer, 1000);
+  setButtons("running");
+};
+
+const reset = () => {
+  seconds = initialSeconds;
+  renderClock(seconds);
+  clearInterval(timeoutId);
+  setButtons("reset");
+};
+
+const pause = () => {
+  clearInterval(timeoutId);
+  setButtons("paused");
 };
