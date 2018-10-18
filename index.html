@@ -9,6 +9,9 @@
         #tomato {
             font-size: 180px;
         }
+        input {
+            width: 1.5rem;
+        }
     </style>
 </head>
 
@@ -25,6 +28,9 @@
         <button id='start' onclick='start()'>Start</button>
         <button id='pause' disabled="true" onclick='pause()'>Pause</button>
         <button id='reset' onclick='reset()'>Reset</button>
+    </div>
+    <div id="inputs">
+        <input id="min-in" type="text" value="25" />:<input id="sec-in" type="text" value="00" />
     </div>
     <script src="main.js"></script>
 </body>
