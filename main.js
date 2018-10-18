@@ -2,12 +2,6 @@ let seconds;
 let counterId;
 let flashId;
 
-getInitialSeconds = () => {
-  const minutes = +document.querySelector("#min-in").value;
-  const seconds = +document.querySelector("#sec-in").value;
-  return minutes * 60 + seconds;
-};
-
 const timer = () => {
   renderClock((seconds -= 1));
   if (!seconds) {
@@ -72,6 +66,12 @@ const setButtons = state => {
   }
 };
 
+getInitialSeconds = () => {
+  const minutes = +document.querySelector("#min-in").value;
+  const seconds = +document.querySelector("#sec-in").value;
+  return minutes * 60 + seconds;
+};
+
 const start = () => {
   seconds = getInitialSeconds();
   counterId = setInterval(timer, 1000);
@@ -81,15 +81,15 @@ const start = () => {
 const reset = () => {
   seconds = getInitialSeconds();
   renderClock(seconds);
-  clearInterval(counterId);
   setButtons("reset");
+  clearInterval(counterId);
   clearInterval(flashId);
   document.body.style.backgroundColor = "";
 };
 
 const pause = () => {
-  clearInterval(counterId);
   setButtons("paused");
+  clearInterval(counterId);
 };
 
 Notification.requestPermission();

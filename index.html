@@ -30,7 +30,8 @@
         <button id='reset' onclick='reset()'>Reset</button>
     </div>
     <div id="inputs">
-        <input id="min-in" type="text" value="25" />:<input id="sec-in" type="text" value="00" />
+        <input id="min-in" type="text" value="25" oninput='renderClock(getInitialSeconds())' />:<input id="sec-in" type="text"
+            value="00" oninput='renderClock(getInitialSeconds())' />
     </div>
     <script src="main.js"></script>
 </body>
