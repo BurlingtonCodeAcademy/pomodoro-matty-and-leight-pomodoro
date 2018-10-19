@@ -9,7 +9,7 @@ const timer = () => {
   }
 };
 
-endTimer = () => {
+const endTimer = () => {
   setButtons("finished");
   flashId = setInterval(flashBackground, 200);
   audio = new Audio("bell-ring-01.mp3");
@@ -38,7 +38,7 @@ const formatSeconds = seconds => {
   };
 };
 
-flashBackground = () => {
+const flashBackground = () => {
   let background = document.body.style.backgroundColor;
   const style = document.body.style;
   background === ""
@@ -69,44 +69,7 @@ const setButtons = state => {
   }
 };
 
-getInitialSeconds = () => {
-  const minutes = +document.querySelector("#min-in").value;
-  const seconds = +document.querySelector("#sec-in").value;
-  return minutes * 60 + seconds;
-};
-
-flashBackground = () => {
-  let background = document.body.style.backgroundColor;
-  const style = document.body.style;
-  background === ""
-    ? (style.backgroundColor = "red")
-    : (style.backgroundColor = "");
-};
-
-const setButtons = state => {
-  const start = document.querySelector("#start");
-  const pause = document.querySelector("#pause");
-  const reset = document.querySelector("#reset");
-  if (state === "running") {
-    start.disabled = true;
-    pause.disabled = false;
-    reset.disabled = false;
-  } else if (state === "paused") {
-    start.disabled = false;
-    pause.disabled = true;
-    reset.disabled = false;
-  } else if (state === "reset") {
-    start.disabled = false;
-    pause.disabled = true;
-    reset.disabled = false;
-  } else if (state === "finished") {
-    start.disabled = true;
-    pause.disabled = true;
-    reset.disabled = false;
-  }
-};
-
-getInitialSeconds = () => {
+const getInitialSeconds = () => {
   const minutes = +document.querySelector("#min-in").value;
   const seconds = +document.querySelector("#sec-in").value;
   return minutes * 60 + seconds;
