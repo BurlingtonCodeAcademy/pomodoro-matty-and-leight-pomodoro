@@ -1,12 +1,30 @@
-let seconds = 25 * 60;
-let timeoutId;
+let seconds;
+let counterId;
+let flashId;
 
 const timer = () => {
-  seconds = seconds - 1;
-  renderClock(seconds);
-  if (seconds < 1) {
-    seconds = 1;
+  renderClock((seconds -= 1));
+  if (!seconds) {
+    endTimer();
   }
+};
+
+endTimer = () => {
+  setButtons("finished");
+  flashId = setInterval(flashBackground, 200);
+  audio = new Audio("bell-ring-01.mp3");
+  audio.play();
+  clearInterval(counterId);
+  if (Notification.permission === "granted") {
+    new Notification("Time for a break!");
+  }
+};
+
+const renderClock = seconds => {
+  const { minutes, remainingSeconds } = formatSeconds(seconds);
+  document.querySelector("#seconds").textContent = remainingSeconds;
+  document.querySelector("#minutes").textContent = minutes;
+  document.title = `${minutes}:${remainingSeconds}`;
 };
 
 const formatSeconds = seconds => {
@@ -17,38 +35,61 @@ const formatSeconds = seconds => {
   return { minutes, remainingSeconds };
 };
 
+flashBackground = () => {
+  let background = document.body.style.backgroundColor;
+  const style = document.body.style;
+  background === ""
+    ? (style.backgroundColor = "red")
+    : (style.backgroundColor = "");
+};
+
+const setButtons = state => {
+  const start = document.querySelector("#start");
+  const pause = document.querySelector("#pause");
+  const reset = document.querySelector("#reset");
+  if (state === "running") {
+    start.disabled = true;
+    pause.disabled = false;
+    reset.disabled = false;
+  } else if (state === "paused") {
+    start.disabled = false;
+    pause.disabled = true;
+    reset.disabled = false;
+  } else if (state === "reset") {
+    start.disabled = false;
+    pause.disabled = true;
+    reset.disabled = false;
+  } else if (state === "finished") {
+    start.disabled = true;
+    pause.disabled = true;
+    reset.disabled = false;
+  }
+};
+
+getInitialSeconds = () => {
+  const minutes = +document.querySelector("#min-in").value;
+  const seconds = +document.querySelector("#sec-in").value;
+  return minutes * 60 + seconds;
+};
+
 const start = () => {
-  timeoutId = setInterval(timer, 1000);
+  seconds = getInitialSeconds();
+  counterId = setInterval(timer, 1000);
   setButtons("running");
 };
 
 const reset = () => {
-  seconds = 25 * 60;
+  seconds = getInitialSeconds();
   renderClock(seconds);
-  clearInterval(timeoutId);
   setButtons("reset");
+  clearInterval(counterId);
+  clearInterval(flashId);
+  document.body.style.backgroundColor = "";
 };
 
-const setButtons = state => {
-  if (state === "running") {
-    document.querySelector("#start").disabled = true;
-    document.querySelector("#pause").disabled = false;
-    document.querySelector("#reset").disabled = false;
-  } else if (state === "paused") {
-    document.querySelector("#start").disabled = false;
-    document.querySelector("#pause").disabled = true;
-    document.querySelector("#reset").disabled = false;
-  } else if (state === "reset") {
-    document.querySelector("#start").disabled = false;
-    document.querySelector("#pause").disabled = true;
-    document.querySelector("#reset").disabled = false;
-  }
+const pause = () => {
+  setButtons("paused");
+  clearInterval(counterId);
 };
 
-const renderClock = seconds => {
-  timeObject = formatSeconds(seconds);
-  remainingSeconds = timeObject.remainingSeconds;
-  minutes = timeObject.minutes;
-  document.querySelector("#seconds").textContent = remainingSeconds;
-  document.querySelector("#minutes").textContent = minutes;
-};
+Notification.requestPermission();

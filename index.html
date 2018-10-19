@@ -3,27 +3,34 @@
 
 <head>
     <meta charset="UTF-8">
-
+    <link rel="icon" href="tomato.png">
+    <title>Pomodoro</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <style>
         #tomato {
             font-size: 180px;
+        }
+        input {
+            width: 1.5rem;
         }
     </style>
 </head>
 
 <body>
-    <div id="tomato">
-        🍅
-    </div>
+    <img id="tomm" src="1f345.png">
 
     <div id="clock">
-        <span id="minutes">25</span>:<span id="seconds">00</span>
+        <div id="minutes">25</div>:<div id="seconds">00</div>
     </div>
 
     <div id="buttons">
         <button id='start' onclick='start()'>Start</button>
         <button id='pause' disabled="true" onclick='pause()'>Pause</button>
         <button id='reset' onclick='reset()'>Reset</button>
+    </div>
+    <div id="inputs">
+        <input id="min-in" type="text" value="25" oninput='renderClock(getInitialSeconds())' />:<input id="sec-in" type="text"
+            value="00" oninput='renderClock(getInitialSeconds())' />
     </div>
     <script src="main.js"></script>
 </body>
